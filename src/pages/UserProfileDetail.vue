@@ -30,30 +30,25 @@
 </template>
 
 <script>
+import { mapState } from 'pinia'
+import { useCommonUserStore } from '../store/common-user'
+
 export default {
   name: 'UserProfileDetail',
   data() {
-    return {
-      user: {}
-    }
+    return {}
+  },
+  computed: {
+    ...mapState(useCommonUserStore, [
+      'user'
+    ])
   },
   methods: {
     openHome () {
       this.$router.push('/')
-    },
-    fetchUserData () {
-      fetch(`/api/user`, {
-        method: 'GET',
-      })
-      .then((res) => res.json())
-      .then((body) => {
-        this.user = body.data
-      })
     }
   },
-  created () {
-    this.fetchUserData()
-  }
+  created () {}
 }
 </script>
 
@@ -61,7 +56,7 @@ export default {
 .detail-button {
   margin-top: 15px;
 }
-
+  
 .skills-hobbies-container {
   width: 50%;
 }

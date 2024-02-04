@@ -14,29 +14,29 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'pinia'
+import { useCommonUserStore } from '../store/common-user'
+
 export default {
   name: 'UserProfile',
   data() {
-    return {
-      user: {}
-    }
+    return {}
+  },
+  computed: {
+    ...mapState(useCommonUserStore, [
+      'user'
+    ])
   },
   methods: {
+    ...mapActions(useCommonUserStore, [
+      'getCurrentUser'
+    ]),
     openDetailProfile () {
       this.$router.push('/detail')
-    },
-    fetchUserData () {
-      fetch(`/api/user`, {
-        method: 'GET',
-      })
-      .then((res) => res.json())
-      .then((body) => {
-        this.user = body.data
-      })
     }
   },
   created () {
-    this.fetchUserData()
+    this.getCurrentUser()
   }
 }
 </script>
